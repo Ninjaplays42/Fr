@@ -1,123 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Happy Birthday</title>
     <style>
+        /* ... (Keep your existing CSS here) ... */
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background: linear-gradient(#13008f, #2100ff);
-            padding-top: 120px;
-            overflow: hidden;
+            background: linear-gradient(135deg, #1e1e2f, #2d2d44);
             color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: sans-serif;
         }
-
-        /* Floating balloons background */
-        .balloon {
-            position: absolute;
-            bottom: -150px;
-            animation: floatUp 6s linear infinite;
-            opacity: 0.8;
-            font-size: 40px;
+        .step { display: none; text-align: center; animation: fadeIn 1.5s; }
+        #step-1 { display: block; }
+        .memory-button { 
+            padding: 15px 30px; border-radius: 50px; border: 2px solid #ff9a9e;
+            background: transparent; color: #ff9a9e; cursor: pointer;
         }
-
-        @keyframes floatUp {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-900px); }
-        }
-
-        .box {
-            background: rgba(255, 0, 0, 0.9);
-            padding: 30px;
-            width: 320px;
-            margin: auto;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.6);
-        }
-
-        h1 {
-            color: #f5ff77;
-            text-shadow: 0 0 10px #fff200;
-        }
-
-        input {
-            padding: 10px;
-            width: 90%;
-            margin-top: 15px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            background-color: black;
-            color: white;
-        }
-
-        button {
-            margin-top: 15px;
-            padding: 10px 20px;
-            background: #ff4f9a;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            box-shadow: 0 0 10px #ff4f9a;
-        }
-
-        #wish {
-            margin-top: 20px;
-            font-size: 20px;
-            color: #ffdfef;
-        }
-
-        /* Cake appears with animation */
-        #cake {
-            font-size: 70px;
-            margin-top: 20px;
-            display: none;
-            animation: pop 0.6s ease-out;
-        }
-
-        @keyframes pop {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <!-- Floating balloons -->
-    <div class="balloon" style="left: 10%;">🎈</div>
-    <div class="balloon" style="left: 30%; animation-delay:2s;">🎈</div>
-    <div class="balloon" style="left: 50%; animation-delay:4s;">🎉</div>
-    <div class="balloon" style="left: 70%; animation-delay:1s;">🎈</div>
-    <div class="balloon" style="left: 85%; animation-delay:3s;">✨</div>
+    <audio id="bg-music" src="ff.mp3" loop></audio>
 
-    <div class="box">
-        <h1>🎉 Happy Birthday 🎉</h1>
-        <p>Enter a name to create a wish:</p>
-
-        <input type="text" id="nameInput" placeholder="Enter name">
-        <button onclick="makeWish()">Create Wish</button>
-
-        <div id="wish"></div>
-        <div id="cake">🎂🎊🎉</div>
+    <div class="step" id="step-1">
+        <p>I have a message for you...</p>
+        <button class="memory-button" onclick="startMemories()">Click to start</button>
     </div>
 
-<script>
-    function makeWish() {
-        let name = document.getElementById("nameInput").value;
+    <div class="step" id="step-2">
+        <p>"It’s been a long day without you, my friend..."</p>
+        <button class="memory-button" onclick="nextStep(2)">Next</button>
+    </div>
 
-        if (name.trim() === "") {
-            document.getElementById("wish").innerHTML = "Please enter a name 😊";
-            document.getElementById("cake").style.display = "none";
-        } else {
-            document.getElementById("wish").innerHTML = 
-                "🎂 Happy Birthday, <b>" + name + "</b>! 🎉<br>Wishing you a wonderful and joyful day!";
-
-            // Show cake decoration
-            document.getElementById("cake").style.display = "block";
+    <div class="step" id="step-3">
+        <p>"And I’ll tell you all about it when I see you again."</p>
+        <button class="memory-button" onclick="nextStep(3)">Restart</button>
+    </div>
+  <div class="step" id="step-4">
+        <p>"yesterday w're in nursury and today in 11th"</p>
+        <button class="memory-button" onclick="nextStep(4)">one more</button>
+    </div>
+    <div class="step" id="step-5">
+        <p>"We didn't realize we were making memories, we just knew we were having fun."</p>
+        <button class="memory-button" onclick="nextStep(5)">one more..</button>
+    </div>
+    <div class="step" id="step-6">
+        <p>"Thinking of the days when our only worry was how we will pass the school test."</p>
+        <button class="memory-button" onclick="nextStep(6)">Restart?</button>
+    </div>
+    <script>
+        function startMemories() {
+            // Start the music
+            document.getElementById('bg-music').play();
+            
+            // Move to the next step
+            nextStep(1);
         }
-    }
-</script>
 
+        function nextStep(currentNumber) {
+            document.getElementById('step-' + currentNumber).style.display = 'none';
+            
+            let nextNumber = currentNumber + 1;
+            let nextElement = document.getElementById('step-' + nextNumber);
+
+            if (nextElement) {
+                nextElement.style.display = 'block';
+            } else {
+                document.getElementById('step-1').style.display = 'block';
+            }
+        }
+    </script>
 </body>
 </html>
